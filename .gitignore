@@ -1,0 +1,28 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment (local only)
+.venv/
+
+# Environment variables (secrets)
+.env
+
+# Receipt images (raw data / potentially sensitive)
+receipts/images/*
+
+# Jupyter/IPython notebooks checkpoint files (if using)
+.ipynb_checkpoints/
+
+# macOS system files
+.DS_Store
+
+# VS Code settings (optional, if using Codespaces or VS Code)
+.vscode/
+
+# Test output/logs
+*.log
+
+# Pytest cache
+.pytest_cache/
