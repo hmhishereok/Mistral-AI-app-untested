@@ -7,7 +7,7 @@ settings = get_settings()
 def parse_receipt(markdown_text: str) -> str:
     url = "https://api.mistral.ai/v1/chat/completions"
     headers = {
-        "Authorization": f"Bearer {settings.api_key}",
+        "Authorization": f"Bearer {settings.mistral_api_key}",
         "Content-Type": "application/json"
     }
 

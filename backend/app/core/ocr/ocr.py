@@ -29,7 +29,7 @@ def run_mistral_ocr(image_path: str) -> str:
     }
 
     headers = {
-        "Authorization": f"Bearer {settings.api_key}",
+        "Authorization": f"Bearer {settings.mistral_api_key}",
         "Content-Type": "application/json"
     }
 
