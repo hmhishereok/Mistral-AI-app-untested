@@ -1,7 +1,7 @@
 from fastapi import APIRouter, File, UploadFile
 import shutil
 import os
-from core.ocr.ocr import run_mistral_ocr
+from backend.app.services.ocr import run_mistral_ocr
 from backend.app.services.parser import parse_receipt
 
 
