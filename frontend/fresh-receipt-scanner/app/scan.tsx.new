@@ -1,0 +1,201 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { StyleSheet, View, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
+import { Camera } from 'expo-camera';
+import * as ImagePicker from 'expo-image-picker';
+import { MaterialIcons } from '@expo/vector-icons';
+import { router } from 'expo-router';
+import { useReceiptScanner } from '../hooks/useReceiptScanner';
+
+export default function ScanScreen() {
+  const cameraRef = useRef<any>(null);
+  const [hasPermission, setHasPermission] = useState<boolean | null>(null);
+  const { scanReceipt, loading } = useReceiptScanner();
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
+      setHasPermission(status === 'granted');
+    })();
+  }, []);
+
+  const takePicture = async () => {
+    if (cameraRef.current) {
+      try {
+        setError(null);
+        const photo = await cameraRef.current.takePictureAsync({
+          quality: 0.8,
+        });
+        await handleImage(photo.uri);
+      } catch (err) {
+        setError('Failed to take picture');
+        console.error('Failed to take picture:', err);
+      }
+    }
+  };
+
+  const pickImage = async () => {
+    try {
+      setError(null);
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 0.8,
+      });
+
+      if (!result.canceled) {
+        await handleImage(result.assets[0].uri);
+      }
+    } catch (err) {
+      setError('Failed to pick image');
+      console.error('Failed to pick image:', err);
+    }
+  };
+
+  const handleImage = async (uri: string) => {
+    try {
+      setError(null);
+      await scanReceipt(uri);
+      router.push('/results');
+    } catch (err) {
+      setError('Failed to process receipt');
+      console.error('Failed to process receipt:', err);
+    }
+  };
+
+  if (hasPermission === null) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#007AFF" />
+        <Text style={styles.loadingText}>Requesting camera permission...</Text>
+      </View>
+    );
+  }
+
+  if (hasPermission === false) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.errorText}>No access to camera</Text>
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={() => Camera.requestCameraPermissionsAsync()}
+        >
+          <Text style={styles.buttonText}>Grant Permission</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#007AFF" />
+        <Text style={styles.loadingText}>Processing receipt...</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      <Camera
+        style={styles.camera}
+        type="back"
+        ref={cameraRef}
+      >
+        <View style={styles.overlay}>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity 
+              style={styles.button}
+              onPress={pickImage}
+            >
+              <MaterialIcons name="photo-library" size={32} color="white" />
+              <Text style={styles.buttonText}>Gallery</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+              style={styles.captureButton}
+              onPress={takePicture}
+            >
+              <View style={styles.captureButtonInner} />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Camera>
+      {error && (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>{error}</Text>
+        </View>
+      )}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#000',
+  },
+  camera: {
+    flex: 1,
+  },
+  overlay: {
+    flex: 1,
+    backgroundColor: 'transparent',
+  },
+  buttonContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    padding: 20,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.4)',
+  },
+  button: {
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    padding: 15,
+    borderRadius: 50,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 14,
+    marginTop: 5,
+  },
+  captureButton: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  captureButtonInner: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#fff',
+    borderWidth: 2,
+    borderColor: '#000',
+  },
+  loadingText: {
+    color: 'white',
+    fontSize: 16,
+    textAlign: 'center',
+    marginTop: 10,
+  },
+  errorContainer: {
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    right: 20,
+    backgroundColor: 'rgba(255,0,0,0.8)',
+    padding: 10,
+    borderRadius: 5,
+  },
+  errorText: {
+    color: 'white',
+    textAlign: 'center',
+  },
+});
