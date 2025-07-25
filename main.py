@@ -12,3 +12,13 @@ app = FastAPI(
 )
 
 app.include_router(api_router, prefix="/api/v1")
+
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Or restrict to your device's IP
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
