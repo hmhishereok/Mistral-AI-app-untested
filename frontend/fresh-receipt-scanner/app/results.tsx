@@ -9,10 +9,10 @@ export default function ResultsScreen() {
   const params = useLocalSearchParams();
 
   useEffect(() => {
-    if (params.image) {
-      scanReceipt(params.image as string);
+    if (params.image && params.base64) {
+      scanReceipt(params.image as string, params.base64 as string);
     }
-  }, [params.image]);
+  }, [params.image, params.base64]);
 
   const handleNewScan = () => {
     resetScan();
