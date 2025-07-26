@@ -1,28 +1,196 @@
-# Python bytecode and caches
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-*.pyo
+*$py.class
 
-# Virtual environment (local only)
-.venv/
+# C extensions
+*.so
 
-# Environment variables (secrets)
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment variables
 .env
+.env.local
+.env.development
+.env.test
+.env.production
+.env.staging
 
-# Receipt images (raw data / potentially sensitive)
-receipts/images/*
-
-# Jupyter/IPython notebooks checkpoint files (if using)
-.ipynb_checkpoints/
-
-# macOS system files
-.DS_Store
-
-# VS Code settings (optional, if using Codespaces or VS Code)
+# IDEs
 .vscode/
+.idea/
+*.swp
+*.swo
+*~
 
-# Test output/logs
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Receipts and uploads
+receipts/temp/
+receipts/images/
+uploads/
+temp/
+
+# Logs
+logs/
 *.log
 
-# Pytest cache
-.pytest_cache/
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Cache
+.cache/
+*.cache
+
+# Build artifacts
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# Node.js (for frontend)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# React Native / Expo
+.expo/
+.expo-shared/
+expo-env.d.ts
+web-build/
+
+# Metro
+.metro-health-check*
+
+# Bundle artifacts
+*.jsbundle
+
+# CocoaPods
+/ios/Pods/
+
+# Xcode
+/ios/build/
+/ios/Index/
+/ios/Logs/
+/ios/DerivedData/
+*.xcuserstate
+*.xcworkspace
+!default.xcworkspace
+
+# Android
+/android/app/build/
+/android/app/debug/
+/android/app/release/
+*.keystore
+!debug.keystore
+
+# Generated files
+*.generated.*
+
+# Temporary files
+*.tmp
+*.temp
+.temporary/
+
+# Security sensitive files
+*.pem
+*.key
+*.crt
+*.p12
+secrets.json
+credentials.json
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
