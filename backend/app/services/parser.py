@@ -2,9 +2,8 @@ import requests
 from backend.app.core.settings import get_settings
 
 
-settings = get_settings()
-
 def parse_receipt(markdown_text: str) -> str:
+    settings = get_settings()  # Only call here, not at top level
     url = "https://api.mistral.ai/v1/chat/completions"
     headers = {
         "Authorization": f"Bearer {settings.mistral_api_key}",

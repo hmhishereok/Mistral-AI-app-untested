@@ -42,11 +42,12 @@ export const useReceiptScanner = () => {
             const formData = new FormData();
             if (base64) {
                 const blob = base64ToBlob(base64, 'image/jpeg');
-                formData.append('receipt', blob, 'receipt.jpg');
+                formData.append('file', blob, 'receipt.jpg');
             } else {
                 throw new Error('No base64 image data provided for web upload.');
             }
-            const response = await fetch('http://3.25.119.39:8000/api/v1/receipt/upload-receipt/', {
+            // Use localhost backend URL for local development
+            const response = await fetch('http://localhost:8000/api/v1/receipt/upload-receipt/', {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -60,17 +61,17 @@ export const useReceiptScanner = () => {
             if (!response.ok) {
                 const errorText = await response.text();
                 console.error('Server error response:', errorText);
-                throw new Error(`Server error: ${response.status}. Please try again.`);
+                throw new Error(`Server error: ${response.status}. ${errorText}`);
             }
 
             const data = await response.json();
             console.log('Server response data:', data);
             
-            if (!data || !data.merchant) {
+            if (!data || !data.data || !data.data.merchant) {
                 console.error('Invalid response data:', data);
                 throw new Error('Could not process receipt. Please try again with a clearer image.');
             }
-            setResult(data);
+            setResult(data.data);
         } catch (err: any) {
             setError(err.message || 'An error occurred while scanning the receipt');
         } finally {
