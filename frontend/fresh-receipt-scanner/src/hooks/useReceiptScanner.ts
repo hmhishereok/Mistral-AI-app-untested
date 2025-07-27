@@ -46,8 +46,8 @@ export const useReceiptScanner = () => {
             } else {
                 throw new Error('No base64 image data provided for web upload.');
             }
-            // Use localhost backend URL for local development
-            const response = await fetch('http://localhost:8000/api/v1/receipt/upload-receipt/', {
+            // Use AWS EC2 server URL
+            const response = await fetch('http://3.25.119.39:8000/api/v1/receipt/upload-receipt/', {
                 method: 'POST',
                 body: formData,
                 headers: {

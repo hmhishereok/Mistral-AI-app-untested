@@ -23,6 +23,10 @@ allowed_origins = [
     "http://localhost:19006",  # Expo dev server
     "http://localhost:8081",   # Metro bundler
     "exp://192.168.1.100:19000",  # Expo app (update with your IP)
+    "http://3.25.119.39:8000",  # AWS EC2 server
+    "http://3.25.119.39",  # AWS EC2 server without port
+    "https://3.25.119.39",  # AWS EC2 server HTTPS
+    "https://3.25.119.39:8000",  # AWS EC2 server HTTPS with port
     # Add your production domains here
 ]
 

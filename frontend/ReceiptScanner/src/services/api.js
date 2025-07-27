@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create axios instance with base URL
 const api = axios.create({
-    baseURL: 'http://localhost:8000/api/v1', // Update this with your backend URL
+    baseURL: 'http://3.25.119.39:8000/api/v1', // AWS EC2 server
     timeout: 30000, // 30 seconds timeout
     headers: {
         'Content-Type': 'application/json',
